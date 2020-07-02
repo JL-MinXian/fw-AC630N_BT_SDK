@@ -107,6 +107,7 @@ is_hid_active = 1;
 ## 2.APP 目录结构
 
  * 以鼠标 APP_MOUSE 为例子，SDK 的目录结构如图 1.1 所示。
+ 
  ![hid](./../../doc/stuff/hid_1.1.png)
 
 ## 3.板级配置
@@ -141,12 +142,14 @@ is_hid_active = 1;
 ### 4.1 APP 总体框架
 
  - HID_SDK 为用户提供一种基于事件处理机制的 APP 开发框架，用户只需基于该框架添加需要处理的事件及事件处理函数，即可按照应用需求完成相应的开发。APP 总体框架如图 1.4 所示。
+ 
  ![hid](./../../doc/stuff/hid_1.4.png)
 
  * APP 状态机
 系统在运行过程中，可以通过 APP 状态机对其状态进行切换，其状态包括创建、运行、挂起、删除。
  * APP 事件处理机
 APP 是基于事件处理机制来运行的。系统在运行过程中，硬件设备的产生的数据将会以事件的形式反馈至系统的全局事件列表，系统将调度 APP 的事件处理机运行相应的事件处理函数对其进行处理。APP 的事件处理机的实现函数 apps/hid/app_mouse.c->event_handler()。处理流程如图1.5 所示。
+
  ![hid](./../../doc/stuff/hid_1.5.png)
 
 ## 5.按键的使用
@@ -155,20 +158,24 @@ APP 是基于事件处理机制来运行的。系统在运行过程中，硬件�
 
  * 配置说明
  IOKEY 参数 在板 级配置 文件 中（C 文件 和 H 文件 ）进 行配置 ，在 H 文件 中可 以打开TCFG_IOKEY_ENABLE 宏和结构配置（IO口和按键连接方式）相关参数，配置结构体参数说明如表 2-1 所示。
+ 
  ![hid](./../../doc/stuff/hid_表2-1.png)
 
  * 配置示例
 IOKEY 参数在板级配置文件中（c 文件和 h 文件）进行配置，配置示例如表 2-2 所示。
+
  ![hid](./../../doc/stuff/hid_表2-2.png)
 
 ### 5.2 ADKEY 的使用
 
  * 配置说明
  ADKEY参数在板级配置文件中（c文件和h文件）进行配置，如board_ac6xxx_mouse.c和board_ac6xxx_mouse_cfg.h，在h文件中可以打开TCFG_ADKEY_ENABLE宏和结构配置（IO口和按键连接方式）相关参数，配置结构体参数说明如表2-3所示。
+ 
  ![hid](./../../doc/stuff/hid_表2-3.png)
 
  * 配置示例
  ADKEY参数在板级配置文件中（c文件和h文件）进行配置，配置示例如表2-4所示。
+ 
  ![hid](./../../doc/stuff/hid_表2-4.png)
  
 ### 5.3 按键扫描参数配置
@@ -177,9 +184,11 @@ IOKEY 参数在板级配置文件中（c 文件和 h 文件）进行配置，配
 
 ### 5.4 按键事件处理
 目前在HID_SDK中实现了的一些按键通用事件如表2-6所示。
+
  ![hid](./../../doc/stuff/hid_表2-6.png)
 
 按键发布消息后，在 APP 将会收到该消息，APP 可以根据该按键消息进行相关处理，APP 的event_handler 收到的按键消息数据格式如表 2-7 所示。用户可以根据收到的按键消息进行相关处理操作。
+
  ![hid](./../../doc/stuff/hid_表2-7.png)
 
 ### 5.5 按键拓展功能
@@ -190,14 +199,16 @@ HID_SDK提供了一些通用按键配置和消息处理方式，如果这些通�
   a、在配置文件的H文件中打开MULT_KEY_ENABLE宏，并添加组合键值。
   b、在配置文件的C文件中配置按键的重映射数据结构。
  配置示例如表2-8所示。
+ 
  ![hid](./../../doc/stuff/hid_表2-8.png)
 
 ## 6.串口的使用
 串口的初始化参数在板级配置文件中（c文件和h文件）进行配置，如board_ac6xxx_mouse.c和board_ac6xxx_mouse_cfg.h，在h文件中使能TCFG_UART0_ENABLE宏和结构配置相关参数，在C文件中添加初始化数据结构，配置示例如表2-9所示。串口初始化完成后，用户可调用apps/debug.c文件中的函数进行串口打印操作。
+
  ![hid](./../../doc/stuff/hid_表2-9.png)
 
 ## 7.Mouse Report Map
-Mouse Report Map定义与apps/common/ble/le_hogp.c文件内，如图3.1所示。
+Mouse Report Map定义与apps/common/ble/le_hogp.c文件内，如下所示。
 ```C
 static const u8 hid_report_map[] = {
     0x05, 0x01, 0x09, 0x02, 0xA1, 0x01, 0x85, 0x01, 0x09, 0x01, 0xA1, 0x00, 0x95, 0x05, 0x75,
@@ -217,23 +228,28 @@ Report Map 在线解析工具地址： http://eleccelerator.com/usbdescreqparser
 
 ## 8.蓝牙鼠标 APP 总体框架
 蓝牙鼠标 APP 总体框架如图 4.2 所示。
- ![hid](./../../doc/stuff/hid_4.1.png)
+
+![hid](./../../doc/stuff/hid_4.2.png)
 
 ## 9.蓝牙鼠标功耗
 
  * 所用光学传感器资料
+ 
   ![hid](./../../doc/stuff/hid_9.1.png)
  
  * 测试条件
+ 
 （1）ble连接状态下Interval：6*1.25 ms = 7.5ms，lantency：100。
 （2）Radio TX:  7.2 dBm。
 （3）DCDC；VDDIOM 3.0V；VDDIOW 2.4V。
 （4）VDDIO和VBAT短接。
  
  * 芯片功耗
+ 
  ![hid](./../../doc/stuff/hid_9.3.png)
 
  * 整机功耗
+ 
  ![hid](./../../doc/stuff/hid_9.4.png)
  
  
